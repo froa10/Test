@@ -21,3 +21,21 @@ Views:
 - Furniture is placeholder, sized from the plan's furniture outlines.
 
 Add your own photos to `photos/` to refine colors, flooring and finishes.
+
+## Wadi design file
+
+`celeste.wdl` is the same house written in the [Wadi](https://github.com/bijoor/wadi)
+design language, using its architect skill. It defines a structural grid of wall
+centrelines, rooms with their doors and windows, furniture from Wadi's standard pack,
+and the roof: a main hip with a steeper street-facing gable over Bedroom 4.
+Open it in the Wadi DSL editor (<https://wadi.house/dsl>) to see it live in 3D, edit it,
+and export plans.
+
+`drawings/` holds the dimensioned drawings Wadi generated from that file: the floor plan,
+four elevations and the roof plan. The 3D page shows them under **Drawings**.
+Wadi names elevations by the drawing's top edge, so its "Back Elevation" is the street side.
+
+To re-check or re-render after editing the `.wdl` (with a Wadi checkout):
+
+    wadi-skill/architect/scripts/check.sh   /path/to/celeste.wdl
+    wadi-skill/architect/scripts/preview.sh /path/to/celeste.wdl
