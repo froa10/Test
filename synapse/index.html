@@ -1,0 +1,832 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synapse | One profile. Clinical studies that may fit you.</title>
+<meta name="description" content="Synapse is one free, bilingual health profile that matches you to clinical studies actively recruiting in the Miami area. You decide whether a research team contacts you.">
+<link rel="icon" type="image/png" href="assets/synapse-node.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blue:#0B3EF9; --pulse:#1260FD; --sky:#54ACFD;
+  --ink:#03050E; --graphite:#1B1E2B; --slate:#5B6070; --mist:#C9CDD8; --cloud:#ECEEF3; --paper:#F6F7FA; --white:#FFFFFF;
+  --ok:#0F7B4F; --ok-bg:#E6F4EC; --warn:#8F5A00; --warn-bg:#FFF3D6; --err:#C1272D; --err-bg:#FDECEC; --info-bg:#EAF0FF;
+  --grad:linear-gradient(45deg,var(--sky) 0%,var(--pulse) 30%,var(--blue) 50%,var(--pulse) 70%,var(--sky) 100%);
+  --sans:"Outfit",Arial,system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
+  --r-s:8px; --r-m:12px; --r-l:20px;
+  --shadow-raised:0 1px 2px rgba(3,5,14,.06),0 8px 24px rgba(3,5,14,.08);
+  --shadow-hero:0 2px 6px rgba(3,5,14,.10),0 30px 60px -12px rgba(3,5,14,.35);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+html,body{overflow-x:clip}
+body{font-family:var(--sans);color:var(--ink);background:var(--white);-webkit-font-smoothing:antialiased;font-size:17px;line-height:1.55}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+img{display:block;max-width:100%}
+.wrap{max-width:1200px;margin:0 auto;padding:0 64px}
+@media (max-width:760px){.wrap{padding:0 20px}}
+.mono{font-family:var(--mono);font-size:12px;line-height:1.4;letter-spacing:.02em}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--slate);display:inline-flex;align-items:center;gap:8px}
+.eyebrow::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--blue)}
+h1,h2,h3{font-weight:600}
+.display{font-size:64px;line-height:1.0;letter-spacing:-.03em}
+.h1{font-size:44px;line-height:1.1;letter-spacing:-.025em}
+.h2{font-size:32px;line-height:1.15;letter-spacing:-.02em}
+.h3{font-size:22px;line-height:1.25;letter-spacing:-.01em}
+.lead{font-size:19px;line-height:1.55;color:var(--slate);max-width:620px}
+@media (max-width:760px){.display{font-size:40px}.h1{font-size:32px}.h2{font-size:26px}.h3{font-size:20px}.lead{font-size:17px}}
+svg.lucide{width:20px;height:20px;stroke-width:1.75;flex:none}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:48px;padding:0 24px;border-radius:999px;font-size:16px;font-weight:500;line-height:1.2;transition:background .2s,color .2s,border-color .2s;white-space:nowrap}
+.btn svg.lucide{width:18px;height:18px}
+.btn-primary{background:var(--blue);color:var(--white)}
+.btn-primary:hover{background:var(--pulse)}
+.btn-secondary{background:var(--white);color:var(--ink);box-shadow:inset 0 0 0 1px var(--mist)}
+.btn-secondary:hover{box-shadow:inset 0 0 0 1px var(--slate)}
+.btn-dark{background:var(--white);color:var(--ink)}
+.btn-dark:hover{background:var(--cloud)}
+.btn-ghost-dark{color:var(--white);box-shadow:inset 0 0 0 1px rgba(255,255,255,.28)}
+.btn-ghost-dark:hover{box-shadow:inset 0 0 0 1px rgba(255,255,255,.6)}
+.btn-sm{height:40px;padding:0 18px;font-size:15px}
+:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:999px}
+
+/* Nav */
+.nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.82);backdrop-filter:saturate(1.6) blur(14px);-webkit-backdrop-filter:saturate(1.6) blur(14px);border-bottom:1px solid transparent;transition:border-color .2s}
+.nav.scrolled{border-bottom-color:var(--cloud)}
+.nav .wrap{display:flex;align-items:center;gap:32px;height:68px}
+.nav .logo img{height:26px;width:auto}
+.nav .links{display:flex;gap:28px;font-size:15px;color:var(--slate)}
+.nav .links a:hover{color:var(--ink)}
+.nav .right{margin-left:auto;display:flex;align-items:center;gap:12px}
+.lang{display:inline-flex;padding:3px;border-radius:999px;background:var(--paper);box-shadow:inset 0 0 0 1px var(--cloud)}
+.lang button{height:30px;min-width:40px;padding:0 10px;border-radius:999px;font-family:var(--mono);font-size:12px;color:var(--slate)}
+.lang button[aria-pressed="true"]{background:var(--white);color:var(--ink);box-shadow:var(--shadow-raised)}
+@media (max-width:900px){.nav .links{display:none}}
+@media (max-width:520px){.nav .right .btn{display:none}}
+
+/* Hero */
+.hero{padding:72px 0 0;text-align:center}
+.hero .eyebrow{margin-bottom:24px}
+.hero h1{max-width:900px;margin:0 auto}
+.hero .lead{margin:24px auto 0}
+.hero .ctas{display:flex;gap:12px;justify-content:center;margin-top:36px;flex-wrap:wrap}
+.hero .fine{margin-top:16px;font-size:14px;color:var(--slate)}
+@media (max-width:760px){.hero{padding-top:56px}}
+
+/* ===== Hero demo stage ===== */
+.stage-wrap{max-width:1200px;margin:56px auto 0;padding:0 24px}
+@media (max-width:760px){.stage-wrap{padding:0 16px;margin-top:44px}}
+.stage{position:relative;width:100%;border-radius:24px;overflow:hidden;background:var(--grad)}
+.stage::after{content:"";position:absolute;inset:0;background:radial-gradient(120% 90% at 15% 0%,rgba(255,255,255,.28),transparent 55%);pointer-events:none}
+.stage-inner{position:absolute;left:0;top:0;transform-origin:0 0}
+.demo{font-family:var(--sans);color:var(--ink);font-size:14px;line-height:1.4;text-align:left}
+.demo svg.lucide{width:16px;height:16px}
+
+/* Window */
+.demo .win{position:absolute;left:336px;top:56px;width:980px;height:640px;background:var(--white);border-radius:14px;box-shadow:var(--shadow-hero);overflow:hidden;z-index:1}
+.demo .bar{height:38px;display:flex;align-items:center;gap:8px;padding:0 14px;border-bottom:1px solid var(--cloud);background:var(--paper)}
+.demo .bar i{width:12px;height:12px;border-radius:50%;background:var(--mist)}
+.demo .bar .url{margin:0 auto;transform:translateX(-26px);height:24px;padding:0 14px;border-radius:999px;background:var(--white);box-shadow:inset 0 0 0 1px var(--cloud);display:flex;align-items:center;gap:6px;color:var(--slate);font-size:12px}
+.demo .bar .url svg{width:12px;height:12px}
+.demo .body{display:grid;grid-template-columns:200px 1fr;height:calc(100% - 38px)}
+.demo .side{background:var(--paper);border-right:1px solid var(--cloud);padding:24px 12px;display:flex;flex-direction:column;gap:4px}
+.demo .side .brand{display:flex;align-items:center;gap:8px;padding:0 8px 18px}
+.demo .side .brand img{height:18px;width:auto}
+.demo .nav-i{display:flex;align-items:center;gap:10px;height:36px;padding:0 10px;border-radius:8px;color:var(--slate)}
+.demo .nav-i.on{background:var(--white);color:var(--ink);box-shadow:inset 0 0 0 1px var(--cloud);font-weight:500}
+.demo .nav-i .sk{height:6px;border-radius:3px;background:var(--mist)}
+.demo .main{padding:26px 28px;min-width:0}
+.demo .head{display:flex;align-items:center;gap:12px}
+.demo .head .t{font-size:22px;font-weight:600;letter-spacing:-.01em}
+.demo .tag{font-family:var(--mono);font-size:11px;color:var(--slate);height:22px;padding:0 8px;border-radius:6px;background:var(--paper);box-shadow:inset 0 0 0 1px var(--cloud);display:inline-flex;align-items:center}
+.demo .counts{display:flex;gap:10px;margin:20px 0 18px}
+.demo .count{display:flex;align-items:center;gap:10px;height:40px;padding:0 14px;border-radius:12px;background:var(--paper);box-shadow:inset 0 0 0 1px var(--cloud);color:var(--slate)}
+.demo .count b{font-weight:600;color:var(--ink);font-size:16px;font-variant-numeric:tabular-nums}
+.demo .table{border-top:1px solid var(--cloud)}
+.demo .th,.demo .row{display:grid;grid-template-columns:36px 128px 104px 130px 150px;align-items:center;gap:14px;padding:0 12px}
+.demo .th{height:38px;font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--slate);text-transform:uppercase;border-bottom:1px solid var(--cloud)}
+.demo .row{height:60px;border-bottom:1px solid var(--cloud)}
+.demo .row .who b{display:block;font-weight:500}
+.demo .row .who span{display:block;color:var(--slate);font-size:13px;margin-top:2px}
+.demo .av{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:600;color:var(--white)}
+.demo .sk{display:block;height:7px;border-radius:4px;background:var(--cloud)}
+.demo .sk.d{background:var(--mist)}
+.demo .when{font-family:var(--mono);font-size:12px;color:var(--slate)}
+.demo .newrow-wrap{display:grid;grid-template-rows:0fr;transition:grid-template-rows .6s cubic-bezier(.2,.8,.2,1)}
+.demo .newrow-wrap.in{grid-template-rows:1fr}
+.demo .newrow-wrap>div{overflow:hidden}
+.demo .newrow{background:linear-gradient(90deg,var(--info-bg),rgba(234,240,255,0) 70%);transition:background 1.2s}
+.demo .newrow.settled{background:transparent}
+.demo .act{white-space:nowrap;justify-self:start;height:32px;padding:0 14px;border-radius:999px;font-size:13px;font-weight:500;background:var(--white);box-shadow:inset 0 0 0 1px var(--mist);display:inline-flex;align-items:center;gap:6px;transition:background .15s,box-shadow .15s,transform .12s,opacity .3s}
+.demo .act.hover{box-shadow:inset 0 0 0 1px var(--slate)}
+.demo .act.press{transform:scale(.96)}
+.demo .act.done{opacity:0}
+
+/* Badges + roll */
+.badge{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 10px;border-radius:999px;font-size:13px;font-weight:500;white-space:nowrap}
+.badge svg.lucide{width:14px;height:14px}
+.badge.info{background:var(--info-bg);color:var(--blue)}
+.badge.ok{background:var(--ok-bg);color:var(--ok)}
+.badge.warn{background:var(--warn-bg);color:var(--warn)}
+.badge.neutral{background:var(--paper);color:var(--slate);box-shadow:inset 0 0 0 1px var(--cloud)}
+.roll{display:inline-grid;overflow:hidden;vertical-align:bottom}
+.roll>*{grid-area:1/1;transition:transform .45s cubic-bezier(.2,.8,.2,1),opacity .45s}
+.roll>.out{transform:translateY(-110%);opacity:0}
+.roll>.pre{transform:translateY(110%);opacity:0}
+
+/* Phone */
+.demo .phone{position:absolute;left:60px;top:22px;width:292px;height:598px;border-radius:46px;background:#0d0f17;padding:10px;box-shadow:var(--shadow-hero);z-index:3}
+.demo .screen{position:relative;height:100%;border-radius:37px;background:var(--white);overflow:hidden}
+.demo .island{position:absolute;top:10px;left:50%;width:86px;height:25px;margin-left:-43px;border-radius:20px;background:#0d0f17;z-index:2}
+.demo .status{height:46px;display:flex;align-items:center;justify-content:space-between;padding:4px 26px 0 30px;font-size:13px;font-weight:600}
+.demo .status .sig{display:flex;gap:4px;align-items:center}
+.demo .status .sig svg{width:15px;height:15px}
+.demo .app{padding:6px 18px 18px}
+.demo .apphead{display:flex;align-items:center;justify-content:space-between;height:36px;color:var(--slate)}
+.demo .apphead img{height:16px;width:auto}
+.demo .study{margin-top:4px}
+.demo .study .t{font-size:21px;font-weight:600;letter-spacing:-.01em;margin-top:10px;line-height:1.2}
+.demo .study .m{font-family:var(--mono);font-size:10.5px;color:var(--ok);margin-top:10px;display:flex;align-items:center;gap:6px}
+.demo .study .m i{width:6px;height:6px;border-radius:50%;background:var(--ok)}
+.demo .facts{margin-top:12px;display:flex;flex-direction:column;gap:8px;color:var(--graphite);font-size:13.5px}
+.demo .facts div{display:flex;gap:10px;align-items:center}
+.demo .facts svg{color:var(--slate)}
+.demo .note{margin-top:12px;padding:10px 12px;border-radius:12px;background:var(--info-bg);color:var(--graphite);font-size:12.5px;line-height:1.45;display:flex;gap:8px}
+.demo .note svg{color:var(--blue);margin-top:1px}
+.demo .consent{margin-top:12px;display:flex;gap:10px;align-items:flex-start;font-size:12.5px;line-height:1.45;color:var(--graphite)}
+.demo .cb{width:22px;height:22px;border-radius:6px;box-shadow:inset 0 0 0 1.5px var(--slate);flex:none;display:grid;place-items:center;transition:background .2s,box-shadow .2s;margin-top:-1px}
+.demo .cb svg{width:14px;height:14px;color:var(--white);stroke-width:2.5;opacity:0;transform:scale(.6);transition:all .2s}
+.demo .cb.on{background:var(--blue);box-shadow:none}
+.demo .cb.on svg{opacity:1;transform:none}
+.demo .req{margin-top:12px;width:100%;height:46px;border-radius:999px;background:var(--blue);color:var(--white);font-size:15px;font-weight:500;display:grid;place-items:center;transition:background .3s,transform .12s,opacity .3s;position:relative;overflow:hidden}
+.demo .req.idle{opacity:.45}
+.demo .req.press{transform:scale(.97)}
+.demo .req.sent{background:var(--ok)}
+.demo .req .roll>span{display:inline-flex;align-items:center;gap:8px}
+.demo .sentmsg{display:grid;grid-template-rows:0fr;transition:grid-template-rows .5s cubic-bezier(.2,.8,.2,1)}
+.demo .sentmsg.in{grid-template-rows:1fr}
+.demo .sentmsg>div{overflow:hidden}
+.demo .sentmsg p{padding-top:8px;font-size:12px;line-height:1.45;color:var(--slate);text-align:center}
+.demo .tabs{position:absolute;left:0;right:0;bottom:0;height:62px;border-top:1px solid var(--cloud);background:rgba(255,255,255,.96);display:grid;grid-template-columns:repeat(3,1fr);padding:9px 10px 0}
+.demo .tabs div{display:flex;flex-direction:column;align-items:center;gap:5px;font-size:10.5px;color:var(--slate)}
+.demo .tabs div.on{color:var(--blue)}
+.demo .tabs svg.lucide{width:20px;height:20px}
+.demo .touch{position:absolute;width:38px;height:38px;margin:-19px 0 0 -19px;border-radius:50%;background:rgba(3,5,14,.16);box-shadow:0 0 0 1px rgba(255,255,255,.7);opacity:0;transform:scale(.6);transition:opacity .25s,transform .25s,left .5s cubic-bezier(.3,.7,.2,1),top .5s cubic-bezier(.3,.7,.2,1);z-index:6;pointer-events:none}
+.demo .touch.on{opacity:1;transform:scale(1)}
+.demo .touch.press{transform:scale(.8);background:rgba(3,5,14,.26)}
+
+/* Flying chip + cursor */
+.demo .fly{position:absolute;z-index:5;display:flex;align-items:center;gap:8px;height:34px;padding:0 14px 0 6px;border-radius:999px;background:var(--white);box-shadow:var(--shadow-raised);font-size:13px;font-weight:500;opacity:0;pointer-events:none}
+.demo .fly .av{width:24px;height:24px;font-size:10px}
+.demo .cursor{position:absolute;z-index:7;width:22px;height:22px;opacity:0;transition:opacity .3s;pointer-events:none;filter:drop-shadow(0 1px 2px rgba(0,0,0,.35))}
+.demo .cursor.on{opacity:1}
+
+.compact-only{display:none}
+.stage.compact .win,.stage.compact .fly,.stage.compact .cursor{display:none}
+.stage.compact .phone{left:44px;top:28px}
+
+/* Sections */
+section{scroll-margin-top:72px}
+.sec{padding:128px 0}
+@media (max-width:760px){.sec{padding:80px 0}}
+.sec-head{max-width:720px}
+.sec-head .eyebrow{margin-bottom:20px}
+.sec-head .lead{margin-top:18px}
+
+/* Two sides */
+.sides{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:56px}
+@media (max-width:900px){.sides{grid-template-columns:1fr}}
+.side-card{border-radius:var(--r-l);background:var(--paper);overflow:hidden;display:flex;flex-direction:column}
+.side-card .copy{padding:36px 36px 0}
+.side-card .who{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.side-card .copy p{color:var(--slate);margin-top:12px;max-width:460px}
+.side-card .copy a.more{display:inline-flex;align-items:center;gap:6px;margin-top:20px;color:var(--blue);font-weight:500}
+.side-card .copy a.more svg{width:18px;height:18px;transition:transform .2s}
+.side-card .copy a.more:hover svg{transform:translateX(3px)}
+.side-card .shot{margin:40px 0 0 36px;flex:1;display:flex;align-items:flex-end}
+.side-card .panel{width:100%;background:var(--white);border-radius:14px 0 0 0;box-shadow:0 0 0 1px var(--cloud),var(--shadow-raised);padding:24px 24px 28px}
+@media (max-width:760px){.side-card .copy{padding:28px 20px 0}.side-card .shot{margin:32px 0 0 20px}.side-card .panel{padding:20px 16px 24px}}
+
+.prog-t{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:15px;font-weight:500}
+.prog-t .mono{color:var(--slate)}
+.track{height:6px;border-radius:3px;background:var(--cloud);margin-top:12px;overflow:hidden}
+.track i{display:block;height:100%;width:66.6%;background:var(--blue);border-radius:3px}
+.steps{margin-top:18px;display:flex;flex-direction:column}
+.step{display:grid;grid-template-columns:28px 1fr auto;gap:12px;align-items:center;height:48px;border-top:1px solid var(--cloud);font-size:15px}
+.step:first-child{border-top:0}
+.step .n{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-family:var(--mono);font-size:11px;background:var(--cloud);color:var(--slate)}
+.step.done .n{background:var(--blue);color:var(--white)}
+.step.done .n svg{width:14px;height:14px;stroke-width:2.5}
+.step .s{color:var(--slate);font-size:13px}
+.step.cur{font-weight:500}
+
+.listing .lt{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+.listing .lt b{font-size:18px;font-weight:600;letter-spacing:-.01em}
+.listing .lt .mono{color:var(--slate);margin-top:8px}
+.listing .meta{display:flex;gap:18px;flex-wrap:wrap;margin-top:16px;color:var(--slate);font-size:14px}
+.listing .meta span{display:flex;align-items:center;gap:6px}
+.listing .meta svg{width:16px;height:16px}
+.pipe{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:22px}
+.pipe>div{border-radius:12px;background:var(--paper);padding:14px 12px}
+.pipe .k{font-size:13px;color:var(--slate)}
+.pipe .v{font-size:24px;font-weight:600;letter-spacing:-.02em;margin-top:6px;font-variant-numeric:tabular-nums}
+.pipe>div.on{background:var(--info-bg)}
+.pipe>div.on .v{color:var(--blue)}
+@media (max-width:520px){.pipe{grid-template-columns:repeat(2,1fr)}}
+
+/* How it works */
+.how{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:56px;border-top:1px solid var(--cloud)}
+.how li{list-style:none;padding:32px 28px 0 0}
+.how li+li{padding-left:28px;border-left:1px solid var(--cloud)}
+.how .num{font-family:var(--mono);font-size:12px;color:var(--blue)}
+.how h3{margin-top:28px}
+.how p{color:var(--slate);margin-top:10px;font-size:15px;line-height:1.5}
+.how .ic{width:44px;height:44px;border-radius:12px;background:var(--info-bg);color:var(--blue);display:grid;place-items:center;margin-top:24px}
+.how .ic svg.lucide{width:22px;height:22px}
+@media (max-width:900px){.how{grid-template-columns:1fr 1fr}.how li:nth-child(3){padding-left:0;border-left:0}.how li:nth-child(n+3){margin-top:16px;border-top:1px solid var(--cloud)}}
+@media (max-width:560px){.how{grid-template-columns:1fr}.how li,.how li+li{padding:28px 0 0;border-left:0}.how li+li{margin-top:16px;border-top:1px solid var(--cloud)}}
+
+/* Dark: research sites */
+.dark{background:var(--ink);color:var(--white);position:relative;overflow:hidden}
+.dark::before{content:"";position:absolute;width:900px;height:900px;right:-300px;top:-420px;background:radial-gradient(circle,rgba(18,96,253,.38),transparent 62%);pointer-events:none}
+.dark .eyebrow{color:#9aa0b2}
+.dark .eyebrow::before{background:var(--sky)}
+.dark .lead{color:#a9aec0}
+.dark .split{display:grid;grid-template-columns:1fr 1.2fr;gap:72px;align-items:center;position:relative}
+@media (max-width:980px){.dark .split{grid-template-columns:1fr;gap:48px}}
+.feats{margin-top:40px;display:flex;flex-direction:column}
+.feat{display:grid;grid-template-columns:24px 1fr;gap:16px;padding:20px 0;border-top:1px solid rgba(255,255,255,.1)}
+.feat svg.lucide{color:var(--sky);margin-top:2px}
+.feat b{font-weight:500;font-size:17px}
+.feat p{color:#a9aec0;font-size:15px;margin-top:4px;line-height:1.5}
+.dark .ctas{display:flex;gap:12px;margin-top:36px;flex-wrap:wrap}
+.dark .small{color:#8c92a6;font-size:14px;margin-top:16px}
+
+.board{background:var(--graphite);border-radius:16px;box-shadow:0 0 0 1px rgba(255,255,255,.08),0 40px 80px -20px rgba(0,0,0,.6);overflow:hidden}
+.board .bh{height:52px;display:flex;align-items:center;gap:12px;padding:0 20px;border-bottom:1px solid rgba(255,255,255,.08)}
+.board .bh b{font-weight:500}
+.board .bh .mono{color:#8c92a6}
+.board .bh .live{margin-left:auto;display:flex;align-items:center;gap:8px;color:#a9aec0;font-size:13px}
+.board .bh .live i{width:7px;height:7px;border-radius:50%;background:#3ccf8e}
+.cols{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:18px}
+.col .ch{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:#a9aec0;padding:4px 4px 12px}
+.col .ch .mono{color:#8c92a6}
+.kc{background:#262a39;border-radius:10px;padding:12px;margin-bottom:8px;box-shadow:0 0 0 1px rgba(255,255,255,.05)}
+.kc .l1{display:flex;align-items:center;gap:8px}
+.kc .dot{width:22px;height:22px;border-radius:50%;flex:none}
+.kc .b{height:6px;border-radius:3px;background:#3a3f52}
+.kc .b2{height:5px;border-radius:3px;background:#323646;margin-top:10px}
+.kc.focus{background:#2d3350;box-shadow:0 0 0 1px rgba(84,172,253,.45)}
+.kc.focus .nm{font-size:13px;font-weight:500}
+.kc.focus .sb{font-size:12px;color:#a9aec0;margin-top:8px}
+.kc.focus .mono{white-space:nowrap;font-size:10.5px;color:var(--sky);margin-top:10px;display:flex;align-items:center;gap:6px}
+.kc.focus .mono svg{width:12px;height:12px}
+@media (max-width:560px){.cols{grid-template-columns:repeat(2,1fr)}.col:nth-child(n+3){display:none}}
+.kc{padding:14px}
+
+/* Principles */
+.princ{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:56px}
+@media (max-width:760px){.princ{grid-template-columns:1fr}}
+.pc{border-radius:var(--r-l);box-shadow:inset 0 0 0 1px var(--cloud);padding:32px;display:grid;grid-template-columns:44px 1fr;gap:20px}
+.pc .ic{width:44px;height:44px;border-radius:12px;background:var(--paper);display:grid;place-items:center;color:var(--blue)}
+.pc b{font-size:19px;font-weight:600;letter-spacing:-.01em}
+.pc p{color:var(--slate);margin-top:8px;font-size:15px}
+.pc .quote{margin-top:16px;font-size:14px;padding:12px 14px;border-radius:12px;background:var(--paper);color:var(--graphite);display:flex;gap:8px;align-items:flex-start}
+.pc .quote svg{width:16px;height:16px;color:var(--blue);margin-top:3px}
+@media (max-width:520px){.pc{grid-template-columns:1fr;padding:24px}}
+
+/* Final CTA */
+.final{padding:0 0 128px}
+.final .box{position:relative;border-radius:28px;background:var(--paper);padding:80px 64px;overflow:hidden;display:grid;grid-template-columns:1fr auto;gap:48px;align-items:center}
+.final .node{width:220px;height:auto;filter:drop-shadow(0 30px 40px rgba(11,62,249,.25))}
+.final .ctas{display:flex;gap:12px;margin-top:32px;flex-wrap:wrap}
+@media (max-width:860px){.final .box{grid-template-columns:1fr;padding:48px 24px}.final .node{width:120px;order:-1}}
+@media (max-width:760px){.final{padding-bottom:80px}}
+
+footer{border-top:1px solid var(--cloud);padding:48px 0 56px;font-size:14px;color:var(--slate)}
+footer .wrap{display:grid;grid-template-columns:1fr auto;gap:32px}
+footer img{height:22px;width:auto}
+footer .disc{max-width:560px;margin-top:16px;line-height:1.55}
+footer .fl{display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start}
+footer .fl a:hover{color:var(--ink)}
+footer .bottom{grid-column:1/-1;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-top:24px;border-top:1px solid var(--cloud)}
+@media (max-width:760px){footer .wrap{grid-template-columns:1fr}}
+
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .8s cubic-bezier(.2,.8,.2,1),transform .8s cubic-bezier(.2,.8,.2,1)}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="Synapse home"><img src="assets/synapse-logo.png" alt="Synapse"></a>
+    <nav class="links" aria-label="Primary">
+      <a href="#patients" data-i18n="nav.patients">For patients</a>
+      <a href="#how" data-i18n="nav.how">How it works</a>
+      <a href="#sites" data-i18n="nav.sites">For research sites</a>
+      <a href="#trust" data-i18n="nav.trust">Our promises</a>
+    </nav>
+    <div class="right">
+      <div class="lang" role="group" aria-label="Language / Idioma">
+        <button type="button" data-lang="en" aria-pressed="true">EN</button>
+        <button type="button" data-lang="es" aria-pressed="false">ES</button>
+      </div>
+      <a class="btn btn-primary btn-sm" href="#start" data-i18n="cta.profileShort">Create free profile</a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="eyebrow" data-i18n="hero.eyebrow">Free for patients · Miami area</div>
+      <h1 class="display" data-i18n="hero.title">One profile. Clinical studies that may fit you.</h1>
+      <p class="lead" data-i18n="hero.lead">Create a free profile with your health history and we’ll match you with studies recruiting in the Miami area. You decide whether a research team contacts you.</p>
+      <div class="ctas">
+        <a class="btn btn-primary" href="#start" id="start"><span data-i18n="cta.profile">Create your free profile</span><i data-lucide="arrow-right"></i></a>
+        <a class="btn btn-secondary" href="#sites" data-i18n="cta.site">I run a research site</a>
+      </div>
+      <p class="fine" data-i18n="hero.fine">English or Spanish. The research site always confirms eligibility.</p>
+    </div>
+
+    <div class="stage-wrap">
+      <div class="stage" id="stage" role="img" aria-label="Product demo: a patient requests contact for a potential match, and the research site receives the consented referral and marks it contacted.">
+        <div class="stage-inner demo" id="demo" aria-hidden="true">
+          <!-- Site dashboard window -->
+          <div class="win">
+            <div class="bar"><i></i><i></i><i></i>
+              <div class="url"><i data-lucide="lock"></i>sites.letsynapse.com</div>
+            </div>
+            <div class="body">
+              <aside class="side">
+                <div class="nav-i"><i data-lucide="layout-grid"></i><span class="sk" style="width:64px"></span></div>
+                <div class="nav-i"><i data-lucide="flask-conical"></i><span data-i18n="d.studies">Studies</span></div>
+                <div class="nav-i on"><i data-lucide="users"></i><span data-i18n="d.referrals">Referrals</span></div>
+                <div class="nav-i"><i data-lucide="calendar"></i><span class="sk" style="width:52px"></span></div>
+                <div class="nav-i"><i data-lucide="chart-no-axes-column"></i><span class="sk" style="width:70px"></span></div>
+              </aside>
+              <div class="main">
+                <div class="head"><div class="t" data-i18n="d.referrals">Referrals</div><span class="tag">STUDY-ID 0042</span></div>
+                <div class="counts">
+                  <div class="count"><span data-i18n="d.new">New</span><b><span class="roll" id="cNew"><span>3</span></span></b></div>
+                  <div class="count"><span data-i18n="d.contacted">Contacted</span><b><span class="roll" id="cCon"><span>12</span></span></b></div>
+                  <div class="count"><span data-i18n="d.screening">In screening</span><b>5</b></div>
+                </div>
+                <div class="table">
+                  <div class="th"><span></span><span data-i18n="d.thPatient">Patient</span><span data-i18n="d.thConsent">Consented</span><span data-i18n="d.thStatus">Status</span><span></span></div>
+                  <div class="newrow-wrap" id="newWrap"><div>
+                    <div class="row newrow" id="newRow">
+                      <div class="av" style="background:var(--blue)">MR</div>
+                      <div class="who"><b>Maria R.</b><span data-i18n="d.study">Adult asthma study</span></div>
+                      <div class="when" data-i18n="d.now">Just now</div>
+                      <div><span class="roll" id="newBadge"><span class="badge info"><i data-lucide="user-plus"></i><span data-i18n="d.newRef">New referral</span></span></span></div>
+                      <button class="act" id="actBtn" tabindex="-1"><i data-lucide="phone"></i><span data-i18n="d.mark">Mark contacted</span></button>
+                    </div>
+                  </div></div>
+                  <div class="row">
+                    <div class="av" style="background:#0F7B4F">JL</div>
+                    <div class="who"><span class="sk d" style="width:46%"></span><span class="sk" style="width:62%;margin-top:9px"></span></div>
+                    <div class="when">2026-10-29</div>
+                    <div><span class="badge ok"><i data-lucide="circle-check"></i><span data-i18n="d.contactedOne">Contacted</span></span></div><span></span>
+                  </div>
+                  <div class="row">
+                    <div class="av" style="background:#54ACFD">AD</div>
+                    <div class="who"><span class="sk d" style="width:38%"></span><span class="sk" style="width:55%;margin-top:9px"></span></div>
+                    <div class="when">2026-10-28</div>
+                    <div><span class="badge neutral"><i data-lucide="clipboard-list"></i><span data-i18n="d.inScreening">In screening</span></span></div><span></span>
+                  </div>
+                  <div class="row">
+                    <div class="av" style="background:#1B1E2B">KP</div>
+                    <div class="who"><span class="sk d" style="width:52%"></span><span class="sk" style="width:48%;margin-top:9px"></span></div>
+                    <div class="when">2026-10-27</div>
+                    <div><span class="badge ok"><i data-lucide="circle-check"></i><span data-i18n="d.contactedOne">Contacted</span></span></div><span></span>
+                  </div>
+                  <div class="row">
+                    <div class="av" style="background:#8F5A00">RS</div>
+                    <div class="who"><span class="sk d" style="width:42%"></span><span class="sk" style="width:58%;margin-top:9px"></span></div>
+                    <div class="when">2026-10-25</div>
+                    <div><span class="badge neutral"><i data-lucide="clipboard-list"></i><span data-i18n="d.inScreening">In screening</span></span></div><span></span>
+                  </div>
+                  <div class="row">
+                    <div class="av" style="background:#1260FD">TB</div>
+                    <div class="who"><span class="sk d" style="width:36%"></span><span class="sk" style="width:50%;margin-top:9px"></span></div>
+                    <div class="when">2026-10-24</div>
+                    <div><span class="badge ok"><i data-lucide="circle-check"></i><span data-i18n="d.contactedOne">Contacted</span></span></div><span></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Patient phone -->
+          <div class="phone">
+            <div class="screen">
+              <div class="island"></div>
+              <div class="status"><span>9:41</span><span class="sig"><i data-lucide="signal"></i><i data-lucide="wifi"></i><i data-lucide="battery-full"></i></span></div>
+              <div class="app">
+                <div class="apphead"><i data-lucide="chevron-left"></i><img src="assets/synapse-node.png" alt=""><i data-lucide="bookmark"></i></div>
+                <div class="study">
+                  <span class="badge info"><i data-lucide="info"></i><span data-i18n="p.potential">Potential match</span></span>
+                  <div class="t" data-i18n="d.study">Adult asthma study</div>
+                  <div class="m"><i></i><span data-i18n="p.recruiting">RECRUITING · CONFIRMED 2026-10-01</span></div>
+                  <div class="facts">
+                    <div><i data-lucide="map-pin"></i><span data-i18n="p.where">3.1 mi · Coral Gables</span></div>
+                    <div><i data-lucide="calendar-days"></i><span data-i18n="p.length">12 weeks · 6 visits</span></div>
+                    <div><i data-lucide="wallet"></i><span data-i18n="p.pay">$50 per completed visit</span></div>
+                  </div>
+                  <div class="note"><i data-lucide="info"></i><span data-i18n="p.note">Based on your answers, you may qualify. The research site will confirm eligibility.</span></div>
+                  <div class="consent"><span class="cb" id="cb"><i data-lucide="check"></i></span><span data-i18n="p.consent">Bayfront Research may contact me by phone or email about this study.</span></div>
+                  <div class="req idle" id="req"><span class="roll" id="reqLabel"><span data-i18n="p.request">Request contact</span></span></div>
+                  <div class="sentmsg" id="sentMsg"><div><p data-i18n="p.sentMsg">The research team will contact you. Taking part is always your choice.</p></div></div>
+                </div>
+              </div>
+              <div class="tabs"><div class="on"><i data-lucide="search"></i><span data-i18n="p.tMatches">Matches</span></div><div><i data-lucide="user-round"></i><span data-i18n="p.tProfile">Profile</span></div><div><i data-lucide="message-circle"></i><span data-i18n="p.tMessages">Messages</span></div></div>
+            </div>
+          </div>
+
+          <div class="fly" id="fly"><span class="av" style="background:var(--blue)">MR</span><span data-i18n="d.flyLabel">Consented referral</span></div>
+          <div class="touch" id="touch"></div>
+          <svg class="cursor" id="cursor" viewBox="0 0 24 24"><path d="M5 2.5v17.2l4.6-4.4 3 6.6 3.1-1.4-3-6.4h6.5z" fill="#fff" stroke="#03050E" stroke-width="1.5" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TWO SIDES -->
+  <section class="sec" id="patients">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="eyebrow" data-i18n="sides.eyebrow">Two sides, one connection</div>
+        <h2 class="h1" data-i18n="sides.title">Every patient, every trial, everywhere.</h2>
+        <p class="lead" data-i18n="sides.lead">Synapse connects people who are curious about clinical research with sites that are actively recruiting. Starting in Miami.</p>
+      </div>
+      <div class="sides">
+        <article class="side-card reveal">
+          <div class="copy">
+            <div class="who"><span class="badge info"><i data-lucide="user"></i><span data-i18n="sides.pTag">For patients · Free</span></span></div>
+            <h3 class="h2" data-i18n="sides.pTitle">Fill it out once. Save at any step.</h3>
+            <p data-i18n="sides.pBody">Share your health history, medications and interests one time. We use it to find studies that may fit you, in English or Spanish.</p>
+            <a class="more" href="#how"><span data-i18n="sides.pMore">See how it works</span><i data-lucide="arrow-right"></i></a>
+          </div>
+          <div class="shot"><div class="panel">
+            <div class="prog-t"><span data-i18n="sides.prog">Profile 4 of 6 steps complete</span><span class="mono" data-i18n="sides.saved">SAVED</span></div>
+            <div class="track"><i></i></div>
+            <div class="steps">
+              <div class="step done"><span class="n"><i data-lucide="check"></i></span><span data-i18n="st.1">Basics</span><span class="s"></span></div>
+              <div class="step done"><span class="n"><i data-lucide="check"></i></span><span data-i18n="st.2">Medical history</span><span class="s"></span></div>
+              <div class="step done"><span class="n"><i data-lucide="check"></i></span><span data-i18n="st.3">Medications</span><span class="s"></span></div>
+              <div class="step done"><span class="n"><i data-lucide="check"></i></span><span data-i18n="st.4">Surgeries</span><span class="s"></span></div>
+              <div class="step cur"><span class="n">5</span><span data-i18n="st.5">Interests</span><span class="s" data-i18n="st.5s">Topics, distance, availability</span></div>
+              <div class="step"><span class="n">6</span><span data-i18n="st.6">Records</span><span class="s" data-i18n="st.6s">Optional</span></div>
+            </div>
+          </div></div>
+        </article>
+
+        <article class="side-card reveal">
+          <div class="copy">
+            <div class="who"><span class="badge neutral"><i data-lucide="building-2"></i><span data-i18n="sides.sTag">For research sites</span></span></div>
+            <h3 class="h2" data-i18n="sides.sTitle">List a study. Receive consented referrals.</h3>
+            <p data-i18n="sides.sBody">Post your recruiting studies and receive referrals from people with completed health profiles who asked to be contacted. Track each one through contact and screening.</p>
+            <a class="more" href="#sites"><span data-i18n="sides.sMore">For research sites</span><i data-lucide="arrow-right"></i></a>
+          </div>
+          <div class="shot"><div class="panel listing">
+            <div class="lt">
+              <div><b data-i18n="d.study">Adult asthma study</b><div class="mono">STUDY-ID 0042</div></div>
+              <span class="badge ok"><i data-lucide="circle-check"></i><span data-i18n="sides.recruiting">Recruiting</span></span>
+            </div>
+            <div class="meta">
+              <span><i data-lucide="map-pin"></i>Coral Gables</span>
+              <span><i data-lucide="calendar-days"></i><span data-i18n="sides.len">12 weeks</span></span>
+              <span><i data-lucide="languages"></i>EN · ES</span>
+            </div>
+            <div class="pipe">
+              <div class="on"><div class="k" data-i18n="d.new">New</div><div class="v">3</div></div>
+              <div><div class="k" data-i18n="d.contacted">Contacted</div><div class="v">12</div></div>
+              <div><div class="k" data-i18n="d.screening">In screening</div><div class="v">5</div></div>
+              <div><div class="k" data-i18n="sides.enrolled">Enrolled</div><div class="v">2</div></div>
+            </div>
+          </div></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="sec" id="how" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="eyebrow" data-i18n="how.eyebrow">How it works</div>
+        <h2 class="h1" data-i18n="how.title">From curious to connected, on your terms.</h2>
+      </div>
+      <ol class="how reveal">
+        <li><div class="num">01</div><div class="ic"><i data-lucide="user-round-pen"></i></div><h3 class="h3" data-i18n="how.1t">Create one free profile</h3><p data-i18n="how.1p">Tell us the basics, your conditions, medications and interests. Uploading records is optional.</p></li>
+        <li><div class="num">02</div><div class="ic"><i data-lucide="search"></i></div><h3 class="h3" data-i18n="how.2t">See potential matches</h3><p data-i18n="how.2p">We show recruiting studies that may fit you, with only details the site has confirmed.</p></li>
+        <li><div class="num">03</div><div class="ic"><i data-lucide="hand"></i></div><h3 class="h3" data-i18n="how.3t">You choose who contacts you</h3><p data-i18n="how.3p">Nothing is shared until you request contact. You name the site and see what it receives.</p></li>
+        <li><div class="num">04</div><div class="ic"><i data-lucide="clipboard-check"></i></div><h3 class="h3" data-i18n="how.4t">The site confirms eligibility</h3><p data-i18n="how.4p">The research team reaches out and runs formal screening. Taking part is always your choice.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- RESEARCH SITES (dark) -->
+  <section class="sec dark" id="sites">
+    <div class="wrap">
+      <div class="split">
+        <div class="reveal">
+          <div class="eyebrow" data-i18n="sites.eyebrow">For research sites</div>
+          <h2 class="h1" data-i18n="sites.title">Profiled, consenting referrals. Not cold leads.</h2>
+          <p class="lead" style="margin-top:18px" data-i18n="sites.lead">Every referral comes from a person with a completed health profile who asked your team to contact them about your study.</p>
+          <div class="feats">
+            <div class="feat"><i data-lucide="list-checks"></i><div><b data-i18n="sites.f1t">Protocol-informed prescreening</b><p data-i18n="sites.f1p">Study-specific questions help surface people who may qualify before they reach your coordinators.</p></div></div>
+            <div class="feat"><i data-lucide="shield-check"></i><div><b data-i18n="sites.f2t">Consent on every referral</b><p data-i18n="sites.f2p">Contact consent names your site and the data shared, kept separate from marketing.</p></div></div>
+            <div class="feat"><i data-lucide="git-commit-horizontal"></i><div><b data-i18n="sites.f3t">Track each referral</b><p data-i18n="sites.f3p">Follow every person from referral through contact and screening, and report outcomes.</p></div></div>
+            <div class="feat"><i data-lucide="languages"></i><div><b data-i18n="sites.f4t">Bilingual by default</b><p data-i18n="sites.f4p">Patients use Synapse in English or Spanish, written for Miami’s communities.</p></div></div>
+          </div>
+          <div class="ctas">
+            <a class="btn btn-dark" href="mailto:hello@letsynapse.com"><span data-i18n="sites.cta">Become a pilot site</span><i data-lucide="arrow-right"></i></a>
+          </div>
+          <p class="small" data-i18n="sites.small">Your team runs formal screening. Listing price and pilot terms are agreed directly with each site.</p>
+        </div>
+
+        <div class="board reveal" aria-hidden="true">
+          <div class="bh"><b data-i18n="d.referrals">Referrals</b><span class="mono">STUDY-ID 0042</span><span class="live"><i></i><span data-i18n="sites.live">Live</span></span></div>
+          <div class="cols">
+            <div class="col"><div class="ch"><span data-i18n="sites.c1">Referred</span><span class="mono">3</span></div>
+              <div class="kc focus"><div class="l1"><span class="av dot" style="background:var(--blue);display:grid;place-items:center;font-size:9px;font-weight:600;color:#fff">MR</span><span class="nm">Maria R.</span></div><div class="sb" data-i18n="d.study">Adult asthma study</div><div class="mono"><i data-lucide="shield-check"></i><span data-i18n="sites.consented">CONSENTED · TODAY</span></div></div>
+              <div class="kc"><div class="l1"><span class="dot" style="background:#3a3f52"></span><span class="b" style="width:60%"></span></div><div class="b2" style="width:80%"></div></div>
+              <div class="kc"><div class="l1"><span class="dot" style="background:#3a3f52"></span><span class="b" style="width:48%"></span></div><div class="b2" style="width:66%"></div></div>
+            </div>
+            <div class="col"><div class="ch"><span data-i18n="d.contacted">Contacted</span><span class="mono">12</span></div>
+              <div class="kc"><div class="l1"><span class="dot" style="background:#3a3f52"></span><span class="b" style="width:55%"></span></div><div class="b2" style="width:72%"></div></div>
+              <div class="kc"><div class="l1"><span class="dot" style="background:#3a3f52"></span><span class="b" style="width:40%"></span></div><div class="b2" style="width:60%"></div></div>
+              <div class="kc"><div class="l1"><span class="dot" style="background:#3a3f52"></span><span class="b" style="width:62%"></span></div><div class="b2" style="width:50%"></div></div>
+              <div class="kc"><div class="l1"><span class="dot" style="background:#3a3f52"></span><span class="b" style="width:45%"></span></div><div class="b2" style="width:70%"></div></div>
+            </div>
+            <div class="col"><div class="ch"><span data-i18n="d.screening">In screening</span><span class="mono">5</span></div>
+              <div class="kc"><div class="l1"><span class="dot" style="background:#3a3f52"></span><span class="b" style="width:50%"></span></div><div class="b2" style="width:64%"></div></div>
+              <div class="kc"><div class="l1"><span class="dot" style="background:#3a3f52"></span><span class="b" style="width:58%"></span></div><div class="b2" style="width:46%"></div></div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRINCIPLES -->
+  <section class="sec" id="trust">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="eyebrow" data-i18n="trust.eyebrow">Our promises</div>
+        <h2 class="h1" data-i18n="trust.title">We only say what is true.</h2>
+        <p class="lead" data-i18n="trust.lead">Clinical research is personal. These rules shape every screen and every message.</p>
+      </div>
+      <div class="princ">
+        <div class="pc reveal"><div class="ic"><i data-lucide="hand"></i></div><div><b data-i18n="trust.1t">You decide who contacts you</b><p data-i18n="trust.1p">A research team only reaches out after you request contact for a specific study.</p><div class="quote"><i data-lucide="message-square-quote"></i><span data-i18n="trust.1q">Request sent. The research team will contact you by phone or email. Taking part is always your choice.</span></div></div></div>
+        <div class="pc reveal"><div class="ic"><i data-lucide="clipboard-check"></i></div><div><b data-i18n="trust.2t">The site confirms eligibility</b><p data-i18n="trust.2p">A potential match means you may qualify. Only the research site can confirm it, through formal screening.</p></div></div>
+        <div class="pc reveal"><div class="ic"><i data-lucide="scale"></i></div><div><b data-i18n="trust.3t">No scores, no guarantees</b><p data-i18n="trust.3p">We never show match percentages or promise enrollment, a cure or results. Study details come from the site, with the date they were confirmed.</p></div></div>
+        <div class="pc reveal"><div class="ic"><i data-lucide="user-cog"></i></div><div><b data-i18n="trust.4t">Your profile, your control</b><p data-i18n="trust.4p">We ask only for what matching needs. Record upload is optional, and you can edit or delete your profile.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="final">
+    <div class="wrap">
+      <div class="box reveal">
+        <div>
+          <div class="eyebrow" data-i18n="final.eyebrow">Launching in Miami</div>
+          <h2 class="h1" style="margin-top:20px;max-width:620px" data-i18n="final.title">Curious about clinical research?</h2>
+          <p class="lead" style="margin-top:16px" data-i18n="final.lead">Create one free profile and see which recruiting studies may fit you. It takes a few minutes, and you can save at any step.</p>
+          <div class="ctas">
+            <a class="btn btn-primary" href="#start"><span data-i18n="cta.profile">Create your free profile</span><i data-lucide="arrow-right"></i></a>
+            <a class="btn btn-secondary" href="#sites" data-i18n="cta.site">I run a research site</a>
+          </div>
+        </div>
+        <img class="node" src="assets/synapse-node.png" alt="">
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <img src="assets/synapse-logo.png" alt="Synapse">
+      <p class="disc" data-i18n="foot.disc">Synapse is a matching service. It does not provide medical advice or make eligibility decisions. The research site always confirms eligibility. Taking part in research is always voluntary.</p>
+    </div>
+    <div class="fl">
+      <a href="#patients" data-i18n="nav.patients">For patients</a>
+      <a href="#sites" data-i18n="nav.sites">For research sites</a>
+      <a href="#" data-i18n="foot.privacy">Privacy</a>
+      <a href="#" data-i18n="foot.terms">Terms</a>
+      <a href="mailto:hello@letsynapse.com" data-i18n="foot.contact">Contact</a>
+    </div>
+    <div class="bottom"><span>© 2026 Synapse · Miami, FL</span><span class="mono" data-i18n="foot.sample">STUDY DETAILS SHOWN ARE ILLUSTRATIVE</span></div>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+<script>
+/* ---------- i18n ---------- */
+const ES = {
+  "nav.patients":"Para pacientes","nav.how":"Cómo funciona","nav.sites":"Para centros de investigación","nav.trust":"Nuestros compromisos",
+  "cta.profileShort":"Crear perfil gratis","cta.profile":"Cree su perfil gratuito","cta.site":"Dirijo un centro de investigación",
+  "hero.eyebrow":"Gratis para pacientes · Área de Miami",
+  "hero.title":"Un solo perfil. Estudios clínicos que podrían ser adecuados para usted.",
+  "hero.lead":"Cree un perfil gratuito con su historial de salud y le mostraremos estudios en el área de Miami que podrían ser adecuados para usted. Usted decide si el equipo de investigación lo contacta.",
+  "hero.fine":"En inglés o español. El centro de investigación siempre confirma la elegibilidad.",
+  "d.studies":"Estudios","d.referrals":"Referidos","d.new":"Nuevos","d.contacted":"Contactados","d.screening":"En evaluación",
+  "d.thPatient":"Paciente","d.thConsent":"Consintió","d.thStatus":"Estado","d.study":"Estudio de asma","d.now":"Ahora",
+  "d.newRef":"Nuevo referido","d.mark":"Marcar contactado","d.inScreening":"En evaluación","d.flyLabel":"Referido con consentimiento","d.contactedOne":"Contactado",
+  "p.potential":"Posible coincidencia","p.recruiting":"RECLUTANDO · CONFIRMADO 2026-10-01","p.where":"3.1 mi · Coral Gables","p.length":"12 semanas · 6 visitas","p.pay":"$50 por visita completada",
+  "p.note":"Es posible que reúna los requisitos. El centro de investigación confirmará su elegibilidad.",
+  "p.consent":"Bayfront Research puede contactarme sobre este estudio.","p.request":"Solicitar contacto","p.sent":"Solicitud enviada","p.sentMsg":"El equipo lo contactará. Participar siempre es su decisión.","p.tMatches":"Estudios","p.tProfile":"Perfil","p.tMessages":"Mensajes",
+  "sides.eyebrow":"Dos lados, una conexión","sides.title":"Cada paciente, cada estudio, en todas partes.",
+  "sides.lead":"Synapse conecta a personas interesadas en la investigación clínica con centros que están reclutando. Comenzamos en Miami.",
+  "sides.pTag":"Para pacientes · Gratis","sides.pTitle":"Complételo una vez. Guarde en cualquier paso.",
+  "sides.pBody":"Comparta su historial de salud, medicamentos e intereses una sola vez. Lo usamos para encontrar estudios que podrían ser adecuados para usted, en inglés o español.",
+  "sides.pMore":"Vea cómo funciona","sides.prog":"Perfil: 4 de 6 pasos completados","sides.saved":"GUARDADO",
+  "st.1":"Datos básicos","st.2":"Historial médico","st.3":"Medicamentos","st.4":"Cirugías","st.5":"Intereses","st.5s":"Temas, distancia, disponibilidad","st.6":"Expedientes","st.6s":"Opcional",
+  "sides.sTag":"Para centros de investigación","sides.sTitle":"Publique un estudio. Reciba referidos con consentimiento.",
+  "sides.sBody":"Publique sus estudios activos y reciba referidos de personas con perfiles de salud completos que pidieron ser contactadas. Dé seguimiento a cada uno durante el contacto y la evaluación.",
+  "sides.sMore":"Para centros de investigación","sides.recruiting":"Reclutando","sides.len":"12 semanas","sides.enrolled":"Inscritos",
+  "how.eyebrow":"Cómo funciona","how.title":"De la curiosidad a la conexión, a su manera.",
+  "how.1t":"Cree un perfil gratuito","how.1p":"Cuéntenos lo básico, sus condiciones, medicamentos e intereses. Subir expedientes es opcional.",
+  "how.2t":"Vea posibles coincidencias","how.2p":"Le mostramos estudios activos que podrían ser adecuados para usted, solo con detalles confirmados por el centro.",
+  "how.3t":"Usted elige quién lo contacta","how.3p":"No se comparte nada hasta que usted solicite contacto. Usted elige el centro y ve lo que recibe.",
+  "how.4t":"El centro confirma la elegibilidad","how.4p":"El equipo de investigación se comunica con usted y realiza la evaluación formal. Participar siempre es su decisión.",
+  "sites.eyebrow":"Para centros de investigación","sites.title":"Referidos con perfil y consentimiento. No contactos en frío.",
+  "sites.lead":"Cada referido viene de una persona con un perfil de salud completo que pidió que su equipo la contactara sobre su estudio.",
+  "sites.f1t":"Preselección basada en el protocolo","sites.f1p":"Preguntas específicas del estudio ayudan a identificar a quienes podrían reunir los requisitos antes de llegar a sus coordinadores.",
+  "sites.f2t":"Consentimiento en cada referido","sites.f2p":"El consentimiento de contacto nombra a su centro y los datos compartidos, separado del marketing.",
+  "sites.f3t":"Seguimiento de cada referido","sites.f3p":"Siga a cada persona desde el referido hasta el contacto y la evaluación, y reporte los resultados.",
+  "sites.f4t":"Bilingüe por defecto","sites.f4p":"Los pacientes usan Synapse en inglés o español, escrito para las comunidades de Miami.",
+  "sites.cta":"Sea un centro piloto","sites.small":"Su equipo realiza la evaluación formal. El precio de publicación y los términos del piloto se acuerdan directamente con cada centro.",
+  "sites.live":"En vivo","sites.c1":"Referidos","sites.consented":"CONSINTIÓ · HOY",
+  "trust.eyebrow":"Nuestros compromisos","trust.title":"Solo decimos lo que es cierto.","trust.lead":"La investigación clínica es personal. Estas reglas guían cada pantalla y cada mensaje.",
+  "trust.1t":"Usted decide quién lo contacta","trust.1p":"Un equipo de investigación solo se comunica después de que usted solicita contacto para un estudio específico.",
+  "trust.1q":"Solicitud enviada. El equipo de investigación se comunicará con usted por teléfono o correo electrónico. Participar siempre es su decisión.",
+  "trust.2t":"El centro confirma la elegibilidad","trust.2p":"Una posible coincidencia significa que es posible que reúna los requisitos. Solo el centro de investigación puede confirmarlo, mediante una evaluación formal.",
+  "trust.3t":"Sin puntajes ni garantías","trust.3p":"Nunca mostramos porcentajes de coincidencia ni prometemos inscripción, una cura o resultados. Los detalles del estudio vienen del centro, con la fecha de confirmación.",
+  "trust.4t":"Su perfil, su control","trust.4p":"Solo pedimos lo necesario para encontrar coincidencias. Subir expedientes es opcional y puede editar o eliminar su perfil.",
+  "final.eyebrow":"Lanzamiento en Miami","final.title":"¿Le interesa la investigación clínica?",
+  "final.lead":"Cree un perfil gratuito y vea qué estudios activos podrían ser adecuados para usted. Toma unos minutos y puede guardar en cualquier paso.",
+  "foot.disc":"Synapse es un servicio de coincidencias. No brinda consejos médicos ni toma decisiones de elegibilidad. El centro de investigación siempre confirma la elegibilidad. Participar en una investigación siempre es voluntario.",
+  "foot.privacy":"Privacidad","foot.terms":"Términos","foot.contact":"Contacto","foot.sample":"LOS DETALLES DE ESTUDIOS SON ILUSTRATIVOS"
+};
+const EN_EXTRA = {"p.sent":"Request sent","d.contactedOne":"Contacted"};
+const EN = {};
+document.querySelectorAll('[data-i18n]').forEach(el=>{ if(!(el.dataset.i18n in EN)) EN[el.dataset.i18n]=el.textContent; });
+Object.assign(EN, EN_EXTRA);
+let lang = 'en';
+const t = k => (lang==='es'?ES:EN)[k] ?? EN[k] ?? k;
+function applyLang(l){
+  lang = l;
+  document.documentElement.lang = l;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{ const v=t(el.dataset.i18n); if(v) el.textContent=v; });
+  document.querySelectorAll('.lang button').forEach(b=>b.setAttribute('aria-pressed', String(b.dataset.lang===l)));
+  try{ localStorage.setItem('synapse-lang', l); }catch(e){}
+  restartDemo();
+}
+document.querySelectorAll('.lang button').forEach(b=>b.addEventListener('click',()=>applyLang(b.dataset.lang)));
+
+/* ---------- icons ---------- */
+lucide.createIcons({attrs:{'stroke-width':1.75}});
+const icon = name => { const i=document.createElement('i'); i.setAttribute('data-lucide',name); return i; };
+function drawIcons(root){ lucide.createIcons({attrs:{'stroke-width':1.75}, nameAttr:'data-lucide'}); }
+
+/* ---------- nav border ---------- */
+const nav = document.getElementById('nav');
+addEventListener('scroll',()=>nav.classList.toggle('scrolled', scrollY>8), {passive:true});
+
+/* ---------- reveal ---------- */
+const io = new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} }),{rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* ---------- stage scaling ---------- */
+const stage = document.getElementById('stage'), demo = document.getElementById('demo');
+const FULL = {w:1200,h:620}, COMPACT = {w:380,h:640};
+let scale = 1, compact = false;
+function fit(){
+  const w = stage.clientWidth;
+  compact = w < 720;
+  stage.classList.toggle('compact', compact);
+  const d = compact ? COMPACT : FULL;
+  scale = w / d.w;
+  demo.style.width = d.w+'px'; demo.style.height = d.h+'px';
+  demo.style.transform = `scale(${scale})`;
+  stage.style.height = (d.h*scale)+'px';
+}
+new ResizeObserver(fit).observe(stage); fit();
+
+/* ---------- demo choreography ---------- */
+const $ = id => document.getElementById(id);
+const sentMsg=$('sentMsg');
+const cb=$('cb'), req=$('req'), reqLabel=$('reqLabel'), touch=$('touch'), fly=$('fly'), cursor=$('cursor');
+const newWrap=$('newWrap'), newRow=$('newRow'), newBadge=$('newBadge'), actBtn=$('actBtn'), cNew=$('cNew'), cCon=$('cCon');
+let run = 0;
+const sleep = (ms, id) => new Promise((res, rej)=>setTimeout(()=> id===run ? res() : rej('cancel'), ms));
+function pos(el){ const r=el.getBoundingClientRect(), s=demo.getBoundingClientRect(); return {x:(r.left-s.left+r.width/2)/scale, y:(r.top-s.top+r.height/2)/scale, w:r.width/scale, h:r.height/scale}; }
+
+function roll(el, html, instant){
+  const cur = el.firstElementChild;
+  const nx = document.createElement('span'); nx.innerHTML = html;
+  const node = nx.childElementCount===1 && nx.firstElementChild.tagName!=='SPAN' ? nx : nx;
+  if(instant){ el.innerHTML=''; el.appendChild(nx); drawIcons(); return; }
+  nx.className='pre'; el.appendChild(nx); drawIcons();
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{ nx.className=''; if(cur){ cur.className='out'; setTimeout(()=>cur.remove(),500);} }));
+}
+const badgeHTML = kind => kind==='new'
+  ? `<span class="badge info"><i data-lucide="user-plus"></i><span>${t('d.newRef')}</span></span>`
+  : `<span class="badge ok"><i data-lucide="circle-check"></i><span>${t('d.contactedOne')}</span></span>`;
+const reqHTML = sent => sent
+  ? `<span style="display:inline-flex;align-items:center;gap:8px"><i data-lucide="check"></i>${t('p.sent')}</span>`
+  : `<span>${t('p.request')}</span>`;
+
+function reset(){
+  cb.classList.remove('on'); req.className='req idle'; sentMsg.style.transition='none'; sentMsg.classList.remove('in'); void sentMsg.offsetWidth; sentMsg.style.transition=''; roll(reqLabel, reqHTML(false), true);
+  touch.className='touch'; cursor.classList.remove('on');
+  fly.style.transition='none'; fly.style.opacity=0;
+  newWrap.style.transition='none'; newWrap.classList.remove('in'); newRow.classList.remove('settled');
+  actBtn.className='act'; roll(newBadge, badgeHTML('new'), true);
+  roll(cNew,'3',true); roll(cCon,'12',true);
+  void demo.offsetWidth; newWrap.style.transition='';
+}
+function poster(){ // payoff frame: request sent, referral received and contacted
+  cb.classList.add('on'); req.className='req sent'; sentMsg.classList.add('in'); roll(reqLabel, reqHTML(true), true);
+  newWrap.style.transition='none'; newWrap.classList.add('in'); newRow.classList.add('settled');
+  actBtn.className='act done'; roll(newBadge, badgeHTML('done'), true);
+  roll(cNew,'3',true); roll(cCon,'13',true);
+}
+function placeTouch(el){ const p=pos(el); touch.style.left=p.x+'px'; touch.style.top=p.y+'px'; }
+function placeCursor(x,y,dur){ cursor.style.transition=`opacity .3s, left ${dur}ms cubic-bezier(.45,.05,.2,1), top ${dur}ms cubic-bezier(.45,.05,.2,1)`; cursor.style.left=x+'px'; cursor.style.top=y+'px'; }
+
+async function loop(id){
+  while(true){
+    reset();
+    await sleep(900,id);
+    // Beat 1: tick consent
+    touch.style.transition='opacity .25s, transform .25s'; placeTouch(cb); await sleep(30,id);
+    touch.style.transition=''; touch.classList.add('on'); await sleep(450,id);
+    touch.classList.add('press'); await sleep(140,id);
+    cb.classList.add('on'); req.classList.remove('idle'); touch.classList.remove('press'); await sleep(650,id);
+    // Beat 2: request contact
+    placeTouch(req); await sleep(650,id);
+    touch.classList.add('press'); req.classList.add('press'); await sleep(150,id);
+    req.classList.remove('press'); touch.classList.remove('press');
+    req.classList.add('sent'); roll(reqLabel, reqHTML(true)); setTimeout(()=>sentMsg.classList.add('in'),250);
+    await sleep(350,id); touch.classList.remove('on');
+    if(!compact){
+      // Beat 3: referral travels to the site dashboard
+      const a = pos(req), b = pos(newWrap.parentElement.querySelector('.th'));
+      fly.style.transition='none'; fly.style.left=(a.x-70)+'px'; fly.style.top=(a.y-17)+'px'; fly.style.transform='scale(.9)'; fly.style.opacity=0;
+      await sleep(40,id);
+      fly.style.transition='left .9s cubic-bezier(.5,0,.2,1), top .9s cubic-bezier(.5,0,.2,1), opacity .3s, transform .9s';
+      fly.style.opacity=1; fly.style.transform='scale(1)';
+      fly.style.left=(b.x-b.w/2+8)+'px'; fly.style.top=(b.y+b.h/2+13)+'px';
+      await sleep(850,id);
+      newWrap.classList.add('in'); roll(cNew,'4');
+      fly.style.transition='opacity .35s'; fly.style.opacity=0;
+      await sleep(1300,id);
+      // Beat 4: coordinator marks contacted
+      const st = pos(actBtn);
+      placeCursor(st.x+260, st.y+170, 0); await sleep(30,id);
+      cursor.classList.add('on'); placeCursor(st.x-st.w/2+22, st.y+2, 900);
+      await sleep(950,id);
+      actBtn.classList.add('hover'); await sleep(350,id);
+      actBtn.classList.add('press'); await sleep(140,id);
+      actBtn.classList.remove('press');
+      roll(newBadge, badgeHTML('done')); roll(cNew,'3'); setTimeout(()=>roll(cCon,'13'),180);
+      actBtn.classList.add('done'); newRow.classList.add('settled');
+      await sleep(500,id);
+      placeCursor(st.x+120, st.y+130, 900);
+      await sleep(900,id); cursor.classList.remove('on');
+      await sleep(2600,id);
+    } else {
+      await sleep(3200,id);
+    }
+  }
+}
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+let visible = false;
+function restartDemo(){
+  run++;
+  if(reduce){ reset(); poster(); return; }
+  if(visible){ const id=run; loop(id).catch(()=>{}); } else { reset(); poster(); }
+}
+new IntersectionObserver(es=>{ visible = es[0].isIntersecting; restartDemo(); },{threshold:.25}).observe(stage);
+addEventListener('resize', ()=>{ clearTimeout(window.__rz); window.__rz=setTimeout(restartDemo,250); });
+
+/* saved language */
+try{ const s=localStorage.getItem('synapse-lang'); if(s==='es') applyLang('es'); }catch(e){}
+</script>
+</body>
+</html>
